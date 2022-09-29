@@ -19,7 +19,8 @@ const Button : React.FC<IButtonProps> = ({ onPress, style, text, textStyle, pres
         <TouchableOpacity
             activeOpacity={.75}
             onPress={onPress}
-            style={style || buttonStyles}>
+            style={buttonStyles.button}
+            >
             <View>
                 <Text style={[buttonStyles.text, textStyle]}>{text}</Text>
             </View>

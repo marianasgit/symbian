@@ -1,10 +1,11 @@
-import { Text, View } from "react-native"
+import { Alert, Image, SafeAreaView, Text, View } from "react-native"
 import styles from "./style";
 import Button from "../../components/Button";
 import Step1 from "../../components/RegisterForm/Step1";
 import Step2 from "../../components/RegisterForm/Step2";
 import { useContext, useState } from "react";
 import Header from "../../components/Header";
+import { isEmail, isPhoneNumber } from "../../validations";
 
 const Register = () => {
     const [formValues, setFormValues] = useState({
@@ -15,6 +16,7 @@ const Register = () => {
         emergencyContactName : "",
         emergencyContactNumber: "",
         password: "",
+        confirmPassword: ""
     })
 
     const [currentStep, setCurrentStep] = useState(0);
@@ -36,6 +38,11 @@ const Register = () => {
     ];
 
     const onConfirmButtonPress = () => {
+
+        if (!isFormValid()){
+            return Alert.alert("Dados incorretos")
+        }
+
         if (currentStep < steps.length - 1) {
             setCurrentStep(currentStep + 1)
         }
@@ -47,20 +54,45 @@ const Register = () => {
         }
     }
 
+    const isFormValid = () => {
+        if (currentStep == 0) {
+            if (!isEmail(formValues.email)) return false;
+
+            if (formValues.name.length < 3) return false;
+
+            if (!isPhoneNumber(formValues.phone)) return false;
+
+            if (!isPhoneNumber(formValues.telephone)) return false;
+        }
+
+        if (currentStep == 1) {
+            if (formValues.password.length <= 0) return false;
+
+            if (formValues.confirmPassword.length <= 0) return false;
+
+            if (formValues.password !== formValues.confirmPassword) return false
+        }
+    }
+
     return (
         <View style={styles.containerRegister}>
+
             <Header />
 
-            <View style={styles.containerRegisterForm}>
-                <Text style={styles.signUp}>Cadastre-se</Text>
+            <Image source={require('../../../assets/doctors.png')} style={styles.image}/>
 
+            <View style={styles.containerRegisterForm}>
+                <View style={styles.intro}>
+                    <Text style={styles.title}>Seja bem-vindo!</Text>
+                    <Text style={styles.text}>Para se cadastrar, preencha as informações a seguir.</Text>
+                </View>
                 {steps[currentStep].component}
 
                 <View>
                     <Button text={(currentStep >= steps.length - 1) ? 'cadastrar' : 'proximo'} onPress={onConfirmButtonPress}></Button>
                 </View>
             </View>
-
+            
         </View>
     )
 }

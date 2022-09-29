@@ -4,30 +4,23 @@ import colors from "../../style/colors"
 
 const styles = StyleSheet.create({
     container : {
-        height : 48,
-        paddingHorizontal : 12,
-        marginVertical : 8,
-        marginHorizontal : 8,
-
+        width: 300,
+        height : 40,
         backgroundColor : colors.background,
-
-        borderWidth : 2,
-        borderColor : colors.background,
-        borderRadius : 12,
-
-        flexDirection : "row",
-        alignItems: 'center'
+        alignItems: "center",
+        flexDirection: "row",
+        paddingLeft: 8,
+        marginVertical: 8,
+        borderRadius: 8,
     },
 
     input : {
-        flex: 1,
-        paddingHorizontal : 4,
-        textVerticalAlign: 'center',
-        alignItems: 'center',
+        width: '100%',
+        marginLeft: 8,
+    },
 
-        icon : {
-            color: colors.red
-        }
+    icon: {
+        color: colors.red
     }
 })    
 

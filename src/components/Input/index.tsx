@@ -10,38 +10,37 @@ interface IInput {
     style? : any
     icon? : keyof typeof MaterialIcons.glyphMap
     iconSize? : number
-    keyboardType ?: "default" | "numeric" | "email-address" | "user"
+    //keyboardType ?: "default" | "numeric" | "email-address" | "user"
     onChangeText : (text : string) => void
     value?: string
     validate? : () => boolean
     maxLength? : number
 }
 
-const Input: React.FC<IInput> = ({style, isPassword, placeholder, icon, iconSize, onChangeText, value, validate, keyboardType, maxLength}) => {
+const Input: React.FC<IInput> = ({style, isPassword, placeholder, icon, iconSize, onChangeText, value, validate}) => {
     const [textVisible, setTextVisible] = useState(false);
 
     const toggleTextVisible = () => setTextVisible(!textVisible)
 
 
     return (
-        <View>
-        { icon && <MaterialIcons name={icon} size={ iconSize || 24} style={{marginRight : 4}}/>}
+        <View style={styles.container}>
+        { icon && <MaterialIcons name={icon} size={ iconSize || 24} style={styles.icon}/>}
         <TextInput
             secureTextEntry={isPassword && !textVisible || false}
             style={styles.input}
             placeholder={placeholder}
             onChangeText={onChangeText}
             value={value}
-            keyboardType={keyboardType || "default"}
+            //keyboardType={keyboardType || "default"}
             placeholderTextColor={colors.gray}
-            maxLength={maxLength}
         />
         { isPassword &&
         
             <Pressable onPress={toggleTextVisible}>
                 <MaterialIcons 
                     name={textVisible ? 'visibility' : 'visibility-off'} 
-                    size={ iconSize || 24}
+                    style={styles.icon}
                 />
             </Pressable>
         }

@@ -4,13 +4,12 @@ import colors from "../../style/colors";
 const buttonStyles = StyleSheet.create({
     button: {
         width : 200,
-        height : 48,
-        margin : 16,
-        borderColor: colors.deepBlue,
+        height : 40,
         justifyContent: 'center',
         alignItems : 'center',
-        flexDirection : 'row',
-        backgroundColor: colors.deepBlue
+        backgroundColor: colors.deepBlue,
+        borderRadius: 8,
+        marginTop: 16,
     },
 
     text : {
