@@ -6,6 +6,7 @@ import Step2 from "../../components/RegisterForm/Step2";
 import { useContext, useState } from "react";
 import Header from "../../components/Header";
 import { isEmail, isPhoneNumber } from "../../validations";
+import apiSymbian from "../../service/apiSymbian";
 
 const Register = () => {
     const [formValues, setFormValues] = useState({
@@ -39,19 +40,38 @@ const Register = () => {
 
     const onConfirmButtonPress = () => {
 
+        if (currentStep < steps.length - 1) {
+            setCurrentStep(currentStep + 1)
+        }
+
         if (!isFormValid()){
             return Alert.alert("Dados incorretos")
         }
 
-        if (currentStep < steps.length - 1) {
-            setCurrentStep(currentStep + 1)
-        }
+        register()
+
     }
 
     const onPreviousButtonPress = () => {
         if (currentStep >= 1) {
             setCurrentStep(currentStep - 1)
         }
+    }
+
+    const register = async () => {
+
+        try{
+            const body = apiSymbian.post('/registerPatient', {
+                name: formValues.name,
+                email: formValues.email,
+                telephone: formValues.telephone,
+                phone: formValues.phone,
+                emergencyContactName: formValues.emergencyContactName,
+                emergencyContactNumber: formValues.emergencyContactNumber,
+                password: formValues.password
+            });
+        } catch (error){}    
+
     }
 
     const isFormValid = () => {
